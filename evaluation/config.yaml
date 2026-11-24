@@ -1,0 +1,167 @@
+# ---------------------------------------------------------------------------
+# BanglaShield AI — Evaluation & Benchmarking Framework configuration
+#
+# This file is the single source of truth for:
+#   - benchmark grading thresholds (80/90/95 bands)
+#   - suite weights for the overall score
+#   - per-metric performance targets (what "good" means, measured honestly)
+#   - run budgets (sample counts, timeouts, virtual rate-limit clients)
+#
+# Policy (enforced by the framework, not by convention):
+#   - No result is ever hardcoded. Every metric in results.json is measured
+#     against the LIVE application at base_url during the run.
+#   - A threshold miss is reported as a FAILED check — never suppressed.
+# ---------------------------------------------------------------------------
+
+framework:
+  name: BanglaShield Evaluation Framework
+  version: 1.0.0
+
+# The application under test (Next.js dev server for local benchmarking;
+# point this at a production deployment to benchmark that environment).
+base_url: http://localhost:3000
+
+# Benchmark grading targets (percent). A suite / overall score of:
+#   >= excellent  -> "excellent"    (95%+)
+#   >= strong     -> "strong"       (90%+)
+#   >= baseline   -> "baseline"     (80%+)
+#   below         -> "below-baseline"
+thresholds:
+  baseline: 80
+  strong: 90
+  excellent: 95
+
+# Suite weights for the weighted overall score (must sum to 1.0).
+# Rationale: detection quality is the product's core promise, so it carries
+# the most weight; reliability/e2e/security are equal-tier gates; frontend
+# and repo/tooling are supporting evidence; latency is a monitored budget.
+weights:
+  detection: 0.30
+  backend_api: 0.15
+  e2e: 0.15
+  security: 0.15
+  repo_integrity: 0.10
+  frontend: 0.10
+  latency: 0.05
+
+# HTTP and pipeline timeouts.
+timeouts:
+  http_ms: 30000          # ordinary REST calls
+  chat_ms: 60000          # live-AI chat turns (one gateway chain budget is 36s)
+  analysis_ms: 120000     # full analysis pipeline (chain budget 75s + margin)
+  poll_interval_ms: 4000   # analysis status polling interval
+  subprocess_ms: 300000   # bun/tsc/eslint/prisma subprocess timeout
+
+# Detection accuracy benchmark.
+detection:
+  # Frozen labeled dataset shipped with the product (extracted at runtime,
+  # never duplicated here): src/lib/evaluation/dataset.ts — 120 samples.
+  dataset_path: src/lib/evaluation/dataset.ts
+  dataset_version: text-benchmark-1.0
+  expected_samples: 120
+  # Track A (deterministic rules baseline) runs the FULL dataset through the
+  # product's own analyst-authorized runner endpoint, twice (determinism proof).
+  track_a_double_run: true
+  # Track B (live production path: gateway + safety gate + honest fallback)
+  # runs a stratified subset through the public citizen API:
+  # samples_per_stratum x {bn,banglish,en} x {scam,benign,ambiguous} strata.
+  track_b_samples_per_stratum: 1   # 1 -> 9 cases; 2 -> 18 cases
+  track_b_workers: 2               # concurrent cases (SQLite-safe)
+  # Per-metric quality targets for the deterministic baseline (Track A).
+  track_a_targets:
+    precision_min: 0.90
+    recall_min: 0.90
+    f1_min: 0.90
+    fpr_max: 0.10
+    fnr_max: 0.10
+  # Per-metric quality targets for the live production path (Track B subset).
+  track_b_targets:
+    accuracy_min: 0.70        # among decided scam/benign cases
+    completion_min: 0.80      # fraction of cases reaching a terminal verdict
+    f1_min: 0.70
+
+# Latency benchmark (per endpoint, measured with raw samples recorded).
+latency:
+  samples_static: 5      # sequential samples per static endpoint
+  samples_dynamic: 3    # per dynamic endpoint (live-AI turns are slow)
+  warmup: true          # one unmeasured warm-up request per endpoint
+  targets_ms:
+    page: 3000
+    health: 2000
+    resources: 2000
+    evaluation_runs: 2000
+    chat_stage: 3000
+    # Aligned with the product's own documented design budget: the gateway
+    # gives each chat turn ONE shared 36s chain deadline (src/lib/llm-gateway.ts,
+    # V9 comment) so fallback-model replies can legitimately take up to 36s.
+    # Target = design budget + 4s tolerance.
+    chat_ai: 40000
+    # Full analysis chain budget is 75s (same file) + margin.
+    analysis: 120000
+
+# Analyst runner access (seeded demo credentials — see prisma/seed.ts,
+# printed at seed time; these are not production secrets).
+analyst:
+  email: analyst@banglashield.org
+  password: Shield#2025
+
+# Virtual client identities: the app's rate limiter keys on the first
+# X-Forwarded-For IP (src/lib/rate-limit.ts: clientKey). The harness assigns
+# each suite its own virtual client subnet so suites never exhaust each
+# other's budgets. These identities are recorded in results.json for
+# reproducibility. (The detection analyst client uses a run-nonce address so
+# repeated runs during development don't collide with the 5-runs/10-min cap.)
+virtual_clients:
+  backend_api: 10.77.31.9
+  detection_analyst_base: 10.77.71      # + run nonce (100..199)
+  detection_track_b_base: 10.77.20     # + case index (1..40)
+  e2e: 10.77.41.9
+  security: 10.77.61.9
+  latency: 10.77.51.9
+
+# Security / edge-case probe settings.
+security:
+  rate_limit_probe:
+    endpoint: /api/v1/agent/chat
+    attempts: 21        # limiter for this route is 20 / 15 min per client
+    expect_status: 429
+
+# Frontend bundle verification.
+frontend:
+  max_initial_scripts: 25   # cap on scripts fetched from the served HTML
+  max_graph_scripts: 15    # cap on additionally discovered chunk-graph files
+  markers:                 # strings expected in the served client bundle
+    - guardian
+    - recovery
+    - community
+    - গার্ডিয়ান
+    - স্ক্যাম চেক
+    - রিকভারি
+  markers_min_found: 4
+
+# Known server-side-SDK import allowlist (architecture rule: the AI SDK may
+# only be imported by server-only code).
+server_only_sdk: z-ai-web-dev-sdk
+server_only_prefixes:
+  - src/lib/
+  - src/app/api/
+
+# Required Prisma models (schema completeness gate).
+required_models:
+  - User
+  - AnalysisSession
+  - EvidenceItem
+  - ConsentRecord
+  - Feedback
+  - Report
+  - FraudPattern
+  - PatternEdge
+  - HumanReview
+  - VerifiedResource
+  - AuditEvent
+  - LearningProgress
+  - CommunityPost
+  - Comment
+  - HelpfulMark
+  - EvaluationRun
+  - EvaluationItem

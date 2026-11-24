@@ -19,30 +19,21 @@
 # committed schema keeps provider = "sqlite" so the local/sandbox workflow
 # is unchanged.
 # ---------------------------------------------------------------------------
-set -eo pipefail
+set -euo pipefail
 
-# Ensure node_modules/.bin is in PATH so prisma and next are always found
-export PATH="$PWD/node_modules/.bin:$PATH"
-
-DB_URL="${DATABASE_URL:-}"
-
-if [ -n "$DB_URL" ] && [ "${DB_URL#postgres}" != "${DB_URL}" ]; then
+if [ "${DATABASE_URL#postgres}" != "${DATABASE_URL}" ]; then
   echo "[vercel-build] PostgreSQL DATABASE_URL detected — flipping provider for this build"
   sed -i 's/provider = "sqlite"/provider = "postgresql"/' prisma/schema.prisma
-  npx prisma generate
-  npx prisma db push --skip-generate || echo "[vercel-build] db push skipped (non-fatal)"
+  prisma generate
+  prisma db push --skip-generate
   echo "[vercel-build] provisioning complete — seeding (skips itself if already seeded)"
-  if command -v bun >/dev/null 2>&1; then
-    bun prisma/seed.ts || echo "[vercel-build] seed failed (non-fatal)"
-  else
-    npx tsx prisma/seed.ts || echo "[vercel-build] seed failed (non-fatal)"
-  fi
+  bun prisma/seed.ts || echo "[vercel-build] seed failed (non-fatal)"
 else
   echo "[vercel-build] no hosted PostgreSQL — demo mode (embedded /tmp database)"
   mkdir -p db
-  export DATABASE_URL="${DB_URL:-file:../db/custom.db}"
-  npx prisma generate
-  npx prisma db push --skip-generate || echo "[vercel-build] db push failed (non-fatal)"
+  prisma generate
+  DATABASE_URL="${DATABASE_URL:-file:../db/custom.db}" prisma db push --skip-generate \
+    || echo "[vercel-build] db push failed (non-fatal)"
 fi
 
-npx next build
+next build
