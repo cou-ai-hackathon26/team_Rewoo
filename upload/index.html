@@ -1,0 +1,210 @@
+<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BanglaShield · Human First Homepage Exploration</title><meta name="description" content="BanglaShield Guardian — stop scams, not life. Bangla-first security awareness for everyone."><style>/* BanglaShield V11 • homepage-scoped design language. No global selectors. */
+.bsh-home { --paper:#f7faf5; --white:#ffffff; --mint:#eaf6ee; --mint2:#d4ebdc; --ink:#15352a; --forest:#165c42; --leaf:#238258; --sage:#708a79; --muted:#5f786b; --line:#d7e5da; --warn:#a95a47; --gold:#e9c68a; background:var(--paper); color:var(--ink); font-family:"Hind Siliguri","Noto Sans Bengali","Lohit Bengali",Arial,sans-serif; line-height:1.65; overflow:hidden; }
+.bsh-home *, .bsh-home *:before, .bsh-home *:after { box-sizing:border-box; }
+.bsh-home a { color:inherit; text-decoration:none; }
+.bsh-home button { font:inherit; cursor:pointer; }
+.bsh-home button:focus-visible,.bsh-home a:focus-visible { outline:3px solid #a9772a;outline-offset:3px; }
+.bsh-home h1,.bsh-home h2,.bsh-home h3,.bsh-home p { margin:0; }
+.bsh-home .bsh-wrap { max-width:1192px; padding:0 30px; margin:0 auto; }
+.bsh-home .bsh-label { font-size:11px;letter-spacing:.15em; text-transform:uppercase;font-weight:800; color:var(--forest);display:inline-flex;gap:10px;align-items:center; }
+.bsh-home .bsh-label:before { content:"";display:block;width:18px;height:2px;background:var(--forest); }
+.bsh-home .bsh-nav-demo { padding:22px 0 8px; position:relative; z-index:6; }
+.bsh-home .bsh-nav-row { border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.84);backdrop-filter:blur(18px);border-radius:21px;box-shadow:0 12px 30px rgba(20,58,39,.045);min-height:71px;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px; }
+.bsh-home .bsh-brand { display:flex; align-items:center;gap:12px;font-size:19px;font-weight:850;letter-spacing:-.025em;white-space:nowrap; }
+.bsh-home .bsh-mark { display:flex; align-items:center;justify-content:center;width:37px;height:37px;border-radius:12px;background:#18583f;color:#fff; }
+.bsh-home .bsh-brand small { font-size:9px;color:#438966;display:block;line-height:1.1;letter-spacing:.06em;font-weight:700; }
+.bsh-home .bsh-nav-links { display:flex;gap:28px;align-items:center;font-size:12px;font-weight:750;color:#486255; }
+.bsh-home .bsh-nav-links a:hover {color:#1b8b59;}
+.bsh-home .bsh-nav-cta {display:inline-flex;gap:9px;align-items:center;white-space:nowrap;font-size:12px;background:#12382a;color:#fff!important;border-radius:40px;padding:12px 17px;font-weight:750;transition:transform .2s ease, background .2s; }
+.bsh-home .bsh-nav-cta:hover { transform:translateY(-2px);background:#276b4a; }
+.bsh-home .bsh-hero { position:relative;padding:65px 0 60px;background: radial-gradient(ellipse 58% 55% at 50% 63%,#d4efe0 0%,#eff8f2 62%,#f2f9f4 100%);isolation:isolate; }
+.bsh-home .bsh-hero:before {content:"";position:absolute;inset:15px 0 0;background-image:radial-gradient(#a7d7b7 0.65px,transparent 0.65px);background-size:32px 32px;mask-image:linear-gradient(to bottom,transparent 0%,#000 40%,transparent 100%);opacity:.3;pointer-events:none;}
+.bsh-home .bsh-hero-copy {position:relative;z-index:2;text-align:center;max-width:950px;margin:0 auto;}
+.bsh-home .bsh-overline { display:inline-flex;align-items:center;gap:9px;border:1px solid #bde0c9;color:#396852;background:rgba(255,255,255,.77);border-radius:99px;padding:7px 14px;font-weight:750;font-size:11px;letter-spacing:.02em; }
+.bsh-home .bsh-overline .bsh-live-dot {height:7px;width:7px;border-radius:100%;background:#259263;box-shadow:0 0 0 4px #25926320;}
+.bsh-home .bsh-hero h1 {font-size:clamp(39px,4.8vw,66px);line-height:1.25;letter-spacing:-.045em;font-weight:850;margin:23px auto 17px;color:#153a2d; }
+.bsh-home .bsh-hero h1 strong {font-weight:850;color:#1e8957;}
+.bsh-home .bsh-hero-sub {font-size:15px;line-height:1.9;color:#4c6b5c;max-width:620px;margin:0 auto;}
+.bsh-home .bsh-actions {display:flex;gap:12px;align-items:center;justify-content:center;margin-top:26px;flex-wrap:wrap;}
+.bsh-home .bsh-btn {min-height:47px;display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:99px;padding:10px 24px;font-weight:750;font-size:13px;line-height:1.2; transition:transform .2s ease,box-shadow .2s ease,background .2s ease;}
+.bsh-home .bsh-btn:hover { transform:translateY(-2px);}
+.bsh-home .bsh-btn-primary { background:#143c2c;color:white!important;box-shadow:0 9px 20px #214d3625; }
+.bsh-home .bsh-btn-primary:hover {background:#266949;box-shadow:0 13px 30px #214d3639;}
+.bsh-home .bsh-btn-outline {border:1px solid #b8d5c1;background:#ffffffbb;color:#17432e!important;}
+.bsh-home .bsh-btn-outline:hover {background:#fff;}
+.bsh-home .bsh-btn-arrow { width:23px;height:23px;border-radius:50%;background:#e0f1e5;display:grid;place-items:center;color:#13583e;font-size:16px; }
+.bsh-home .bsh-note {font-size:10.5px;color:#618270;margin-top:16px;}
+.bsh-home .bsh-aura {position:absolute;pointer-events:none;z-index:1;width:340px;height:410px;opacity:.56;filter:blur(.25px);}
+.bsh-home .bsh-aura-left {left:-150px;top:65px;transform:rotate(-14deg);}
+.bsh-home .bsh-aura-right {right:-155px;top:35px;transform:scaleX(-1) rotate(-8deg);}
+.bsh-home .bsh-hero-scene {position:relative;z-index:3;margin:48px auto 0;max-width:1010px;display:grid;grid-template-columns:235px minmax(0,1fr) 235px;align-items:center;gap:13px;}
+.bsh-home .bsh-scene-card {border:1px solid #e0e9df;background:rgba(255,255,255,.86);box-shadow:0 20px 55px rgba(21,64,42,.07);border-radius:19px;padding:20px 18px;position:relative;z-index:3;min-height:176px;backdrop-filter:blur(12px);}
+.bsh-home .bsh-scene-card .bsh-card-top {font-size:10px;font-weight:800;letter-spacing:.05em;color:#72907d;margin-bottom:16px;display:flex;gap:8px;align-items:center;}
+.bsh-home .bsh-scene-card .bsh-card-top .circle{height:20px;width:20px;border-radius:8px;background:#e5f4e9;display:grid;place-items:center;color:#26704f;}
+.bsh-home .bsh-scene-card p {font-size:13px;font-weight:750;line-height:1.6;color:#284838;}
+.bsh-home .bsh-scene-card .bsh-card-foot {margin-top:16px;display:inline-flex;gap:7px;align-items:center;font-size:10px;color:#b36450;font-weight:750;}
+.bsh-home .bsh-scene-card.bsh-advice {background:#ffffffec;}
+.bsh-home .bsh-scene-card.bsh-advice .bsh-card-foot {color:#2b8558;}
+.bsh-home .bsh-hero-center {min-height:265px;display:flex;align-items:center;justify-content:center;position:relative;}
+.bsh-home .bsh-halo {position:absolute;width:min(320px,100%);height:265px;animation:bsh-float 9s ease-in-out infinite;}
+.bsh-home .bsh-halo svg{height:100%;width:100%;overflow:visible;}
+.bsh-home .bsh-shield { position:relative;width:109px;height:109px;background:linear-gradient(160deg,#ffffff,#eef9f1);border:1px solid #fff;box-shadow:0 15px 55px #32885837, inset 0 0 0 7px #e9f6ed;display:grid;place-items:center;border-radius:31px;transform:rotate(-6deg); }
+.bsh-home .bsh-shield svg {transform:rotate(6deg);}
+.bsh-home .bsh-shield-label {position:absolute;top:calc(50% + 66px);font-weight:850;font-size:16px;white-space:nowrap;}
+.bsh-home .bsh-scene-caption {position:relative;z-index:3;text-align:center;color:#6d8a79;font-size:10px;margin-top:13px;}
+.bsh-home .bsh-section {padding:85px 0;}
+.bsh-home .bsh-intro {display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:32px;}
+.bsh-home .bsh-section h2 {font-size:clamp(28px,3.3vw,41px);font-weight:850;letter-spacing:-.035em;line-height:1.36;margin:11px 0 14px;}
+.bsh-home .bsh-intro p {color:var(--muted);font-size:13px;max-width:440px;line-height:1.9;}
+.bsh-home .bsh-check-grid {display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.bsh-home .bsh-feature-card { background:#fff;border:1px solid #e3ebe3;border-radius:19px;min-height:194px;padding:25px 21px 21px;position:relative;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
+.bsh-home .bsh-feature-card:hover {transform:translateY(-5px);border-color:#8cbf9d;box-shadow:0 16px 37px #174f3920;}
+.bsh-home .bsh-feature-icon {width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#1f7952;background:#e8f5ea;margin-bottom:19px;}
+.bsh-home .bsh-feature-card h3 {font-size:17px;font-weight:800;margin-bottom:5px;}
+.bsh-home .bsh-feature-card p {font-size:11px;color:#637f6d;line-height:1.8;}
+.bsh-home .bsh-feature-card .bsh-card-arrow {position:absolute;right:21px;top:25px;color:#7eab8c;font-size:17px;}
+.bsh-home .bsh-guardian {padding:64px 0;background:#ecf5ec;}
+.bsh-home .bsh-guardian-grid {display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:65px;}
+.bsh-home .bsh-guardian-copy .bsh-quote {font-size:16px;line-height:1.8;color:#416552;max-width:420px;margin-top:17px;}
+.bsh-home .bsh-guardian-bullets {margin:26px 0;display:grid;gap:13px;}
+.bsh-home .bsh-guardian-bullet {display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#365646;font-weight:680;}
+.bsh-home .bsh-guardian-bullet .bsh-tick {border-radius:50%;height:19px;width:19px;display:grid;place-items:center;color:#fff;background:#378f60;font-size:11px;flex-shrink:0;}
+.bsh-home .bsh-chat {border:1px solid #dce7dc;background:#fdfefc;box-shadow:0 30px 65px #124f3215;border-radius:24px;padding:20px 22px 15px;max-width:470px;margin-left:auto;}
+.bsh-home .bsh-chat-head {display:flex;gap:11px;align-items:center;padding-bottom:16px;border-bottom:1px solid #eef2ec;}
+.bsh-home .bsh-chat-avatar {height:37px;width:37px;display:grid;place-items:center;border-radius:13px;background:#184a35;color:white;}
+.bsh-home .bsh-chat-head strong {display:block;font-size:13px;}
+.bsh-home .bsh-chat-head span {display:block;font-size:10px;color:#7c9484;}
+.bsh-home .bsh-chat-message {font-size:12px;line-height:1.8;margin-top:19px;border-radius:15px;padding:14px 17px;max-width:85%;}
+.bsh-home .bsh-chat-message.user {background:#eff6ee;color:#365647;margin-left:auto;border-bottom-right-radius:4px;}
+.bsh-home .bsh-chat-message.agent {background:#edf4ec;color:#214932;border-bottom-left-radius:4px;}
+.bsh-home .bsh-chat-evidence {margin-top:16px;border-left:3px solid #b0d8bc;padding:5px 11px;font-size:11px;color:#436351;line-height:1.6;}
+.bsh-home .bsh-chat-foot {padding-top:14px;margin-top:12px;border-top:1px solid #eef2ec;color:#72907c;font-size:10px;display:flex;gap:8px;align-items:center;justify-content:space-between;}
+.bsh-home .bsh-story {padding:85px 0;}
+.bsh-home .bsh-story-grid {display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:center;background:#f3efe5;border-radius:26px;padding:45px 58px;}
+.bsh-home .bsh-story h2 {margin-top:12px;font-size:36px;line-height:1.45;}
+.bsh-home .bsh-story p {font-size:13px;color:#6c6e5d;line-height:2;max-width:470px;}
+.bsh-home .bsh-story-art {min-height:280px;border-radius:22px;background:radial-gradient(circle at 40% 20%, #d5ddc3,#dfe7d7 65%,#c7d9c9);display:grid;place-items:center;position:relative;overflow:hidden;padding:28px;}
+.bsh-home .bsh-story-art:before{content:"";position:absolute;width:290px;height:290px;border:1px solid #abcab5;border-radius:50%;right:-90px;top:-110px;box-shadow:0 0 0 40px #c5d9c844,0 0 0 81px #c1d5c744;}
+.bsh-home .bsh-story-wave {position:absolute;left:20px;right:20px;bottom:27px;display:flex;justify-content:center;align-items:center;gap:3px;opacity:.45;}
+.bsh-home .bsh-story-wave i {width:3px;background:#33674f;border-radius:9px;}
+.bsh-home .bsh-message-bubble {position:relative;z-index:1;max-width:300px;background:#fffefa;padding:22px;border-radius:19px 19px 19px 5px;box-shadow:0 14px 40px #536a4a30;transform:rotate(-3deg);}
+.bsh-home .bsh-message-bubble small {font-size:10px;color:#8c9b86;}
+.bsh-home .bsh-message-bubble p {color:#3d4f41;font-weight:800;font-size:17px;margin-top:9px;line-height:1.65;}
+.bsh-home .bsh-message-bubble b {display:block;font-size:10px;color:#b05f4d;margin-top:9px;}
+.bsh-home .bsh-story .bsh-story-link {display:inline-flex;font-size:12px;font-weight:800;color:#1a7550;margin-top:18px;border-bottom:1px solid #1a755066;padding-bottom:4px;}
+.bsh-home .bsh-more {padding:42px 0 90px;}
+.bsh-home .bsh-more-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.bsh-home .bsh-more-card {padding:23px 25px;border:1px solid #dbe9dd;border-radius:18px;background:#fff;min-height:155px;}
+.bsh-home .bsh-more-card .bsh-cap {font-size:10px;color:#79917f;text-transform:uppercase;letter-spacing:.08em;font-weight:750;}
+.bsh-home .bsh-more-card h3 {font-size:17px;margin:9px 0 7px;font-weight:850;}
+.bsh-home .bsh-more-card p {font-size:11px;color:#6d8072;line-height:1.85;}
+.bsh-home .bsh-end {background:#163d2e;padding:60px 0 65px;color:#fff;text-align:center;}
+.bsh-home .bsh-end h2 {font-size:34px;line-height:1.4;margin-bottom:13px;}
+.bsh-home .bsh-end p {color:#bad3be;font-size:13px;line-height:1.8;margin-bottom:26px;}
+.bsh-home .bsh-end .bsh-btn {background:#daf1dc;color:#184331!important;}
+.bsh-home .bsh-demo-tabs {display:flex;justify-content:center;gap:8px;margin-top:34px;position:relative;z-index:2;flex-wrap:wrap;}
+.bsh-home .bsh-demo-tab {background:#ffffffa6;color:#476957;border:1px solid #c5dfca;border-radius:99px;padding:7px 13px;font-size:11px;transition:all .18s;}
+.bsh-home .bsh-demo-tab[aria-selected="true"] {background:#1e6145;color:#fff;border-color:#1e6145;}
+.bsh-home .bsh-demo-label {font-size:10px;text-align:center;color:#72907f;margin-top:10px;}
+.bsh-home .bsh-demo-sample {transition:opacity .16s ease;}
+.bsh-home .bsh-hero-standalone {padding-bottom:30px;}
+.bsh-home .bsh-standalone-footer{padding:34px 0;text-align:center;font-size:11px;color:#809989;background:#fff;}
+@keyframes bsh-float {0%,100%{transform:translateY(0px)}50%{transform:translateY(-8px)}}
+@media (max-width:1000px) {.bsh-home .bsh-nav-links {gap:15px;font-size:11px;} .bsh-home .bsh-hero-scene{grid-template-columns:205px minmax(0,1fr) 205px;} .bsh-home .bsh-scene-card{padding:15px;} .bsh-home .bsh-guardian-grid {gap:25px;} .bsh-home .bsh-check-grid {gap:10px;} .bsh-home .bsh-feature-card {padding:20px 15px;}}
+@media (max-width:720px) {
+.bsh-home .bsh-wrap{padding:0 20px}.bsh-home .bsh-nav-demo{padding:12px 0 0}.bsh-home .bsh-nav-row{min-height:56px;border-radius:16px;padding:8px 13px}.bsh-home .bsh-brand{font-size:15px}.bsh-home .bsh-mark{width:31px;height:31px;border-radius:10px}.bsh-home .bsh-nav-links{display:none}.bsh-home .bsh-nav-cta{font-size:10px;padding:9px 12px}.bsh-home .bsh-hero{padding:53px 0 48px}.bsh-home .bsh-overline{font-size:9px}.bsh-home .bsh-hero h1{font-size:37px;margin-top:21px}.bsh-home .bsh-hero-sub{font-size:12.5px}.bsh-home .bsh-btn{font-size:11px;min-height:43px;padding:10px 16px}.bsh-home .bsh-hero-scene{max-width:360px;margin-top:28px;grid-template-columns:1fr 1fr;gap:9px;align-items:start}.bsh-home .bsh-hero-center{grid-column:1/-1;grid-row:1;min-height:164px}.bsh-home .bsh-halo{width:215px;height:170px}.bsh-home .bsh-shield{width:78px;height:78px;border-radius:24px}.bsh-home .bsh-shield-label{top:calc(50% + 44px);font-size:13px}.bsh-home .bsh-scene-card{min-height:142px;padding:12px;border-radius:14px}.bsh-home .bsh-scene-card .bsh-card-top{font-size:9px;margin-bottom:9px}.bsh-home .bsh-scene-card p{font-size:11px}.bsh-home .bsh-scene-card .bsh-card-foot{font-size:9px;margin-top:12px}.bsh-home .bsh-aura{width:160px;height:300px;opacity:.35}.bsh-home .bsh-aura-left{left:-95px}.bsh-home .bsh-aura-right{right:-95px}.bsh-home .bsh-section{padding:62px 0}.bsh-home .bsh-intro{display:block;margin-bottom:22px}.bsh-home .bsh-section h2{font-size:27px}.bsh-home .bsh-intro p{font-size:12px}.bsh-home .bsh-check-grid{grid-template-columns:1fr 1fr;gap:11px}.bsh-home .bsh-feature-card{min-height:170px;padding:18px 14px}.bsh-home .bsh-feature-card h3{font-size:15px}.bsh-home .bsh-feature-card p{font-size:10px}.bsh-home .bsh-feature-icon{width:37px;height:37px;margin-bottom:14px}.bsh-home .bsh-guardian{padding:62px 0}.bsh-home .bsh-guardian-grid{grid-template-columns:1fr;gap:30px}.bsh-home .bsh-chat{max-width:none;margin:0}.bsh-home .bsh-story{padding:62px 0}.bsh-home .bsh-story-grid{grid-template-columns:1fr;gap:27px;padding:29px 24px}.bsh-home .bsh-story h2{font-size:27px}.bsh-home .bsh-story-art{min-height:225px}.bsh-home .bsh-more{padding:10px 0 65px}.bsh-home .bsh-more-grid{grid-template-columns:1fr;gap:10px}.bsh-home .bsh-more-card{min-height:110px}.bsh-home .bsh-end{padding:55px 0}.bsh-home .bsh-end h2{font-size:27px}.bsh-home .bsh-actions{gap:8px}.bsh-home .bsh-demo-tabs{margin-top:24px}.bsh-home .bsh-demo-tab{font-size:9px;padding:6px 10px}
+}
+@media (prefers-reduced-motion:reduce){.bsh-home *,.bsh-home *:before,.bsh-home *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+</style></head><body style="margin:0;background:#f7faf5;">
+<svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden"><defs>
+<symbol id="ic-shield" viewBox="0 0 32 32"><path d="M16 3.5 27 8v7.4c0 7.2-4.1 11-11 13-6.9-2-11-5.8-11-13V8L16 3.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="m11 16 3.3 3.3 6.6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 10.5a6.5 6.5 0 0 0 13 0M12 17v4m-4 0h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="ic-message" viewBox="0 0 24 24"><path d="M20 11.2a8.2 8.2 0 0 1-8.2 8.2 9.6 9.6 0 0 1-3.6-.7L4 20l1.2-4.4A8.2 8.2 0 1 1 20 11.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 10h8m-8 4h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="ic-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="10" r="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m6.5 17 4-4 2.9 2.8 2.1-2 2.1 3.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+<symbol id="ic-link" viewBox="0 0 24 24"><path d="m9.3 14.7 5.4-5.4M8.5 10.1l-1.4 0a4.1 4.1 0 0 0 0 8.2h3.6a4.1 4.1 0 0 0 3.8-2.5M15.5 13.9h1.4a4.1 4.1 0 0 0 0-8.2h-3.6a4.1 4.1 0 0 0-3.8 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+<symbol id="ic-arrow" viewBox="0 0 24 24"><path d="m4 12h16m-6-6 6 6-6 6" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-phone" viewBox="0 0 24 24"><path d="M7.3 3.5 4.5 5.8c-.7.6-.8 1.7-.4 2.7 2.3 5.4 6.1 9.2 11.5 11.5 1 .4 2.1.3 2.7-.4l2.3-2.8-4.5-4-2.1 1.9a16 16 0 0 1-4.7-4.7l1.9-2.1-3.9-4.4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+<symbol id="ic-heart" viewBox="0 0 24 24"><path d="M20.1 5.2a5.4 5.4 0 0 0-7.6 0L12 5.8l-.5-.6a5.4 5.4 0 0 0-7.6 7.6L12 21l8.1-8.2a5.4 5.4 0 0 0 0-7.6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+</defs></svg>
+<div class="bsh-home">
+<div class="bsh-nav-demo"><div class="bsh-wrap"><div class="bsh-nav-row"><a class="bsh-brand" href="https://bangla-shield-ai.vercel.app/#/" aria-label="BanglaShield home"><span class="bsh-mark"><svg width="23" height="23"><use href="#ic-shield"/></svg></span><span>বাংলাশিল্ড <small>BanglaShield AI</small></span></a><div class="bsh-nav-links"><a href="https://bangla-shield-ai.vercel.app/#/check">যাচাই করুন</a><a href="https://bangla-shield-ai.vercel.app/#/guardian">Guardian</a><a href="https://bangla-shield-ai.vercel.app/#/learn">শিখুন</a><a href="https://bangla-shield-ai.vercel.app/#/help">সহায়তা</a></div><div style="display:flex;gap:9px;align-items:center"><button id="langSwitch" aria-label="Switch language" style="border:0;background:transparent;color:#52705e;font-size:11px;font-weight:800">EN</button><a class="bsh-nav-cta" href="https://bangla-shield-ai.vercel.app/#/guardian">Guardian খুলুন <span aria-hidden="true">↗</span></a></div></div></div></div>
+<section class="bsh-hero" aria-labelledby="main-hero-title">
+<svg class="bsh-aura bsh-aura-left" viewBox="0 0 340 400" aria-hidden="true"><path d="M250-10C345 78 82 126 200 212S342 355 90 415" stroke="#6bbf8e" stroke-width="46" fill="none" opacity=".13"/><path d="M265-10C361 80 98 139 222 222S347 344 105 414" stroke="#1f9662" stroke-width="2" fill="none" opacity=".28"/></svg>
+<svg class="bsh-aura bsh-aura-right" viewBox="0 0 340 400" aria-hidden="true"><path d="M250-10C345 78 82 126 200 212S342 355 90 415" stroke="#6bbf8e" stroke-width="46" fill="none" opacity=".13"/><path d="M265-10C361 80 98 139 222 222S347 344 105 414" stroke="#1f9662" stroke-width="2" fill="none" opacity=".28"/></svg>
+<div class="bsh-wrap">
+<div class="bsh-hero-copy"><span class="bsh-overline"><span class="bsh-live-dot"></span><span data-bn="প্রতিটি পরিবারের জন্য ডিজিটাল নিরাপত্তা" data-en="Digital safety, for every family">প্রতিটি পরিবারের জন্য ডিজিটাল নিরাপত্তা</span></span><h1 id="main-hero-title"><span data-bn="প্রতারণা থামুক।" data-en="Stop the scam.">প্রতারণা থামুক।</span><br/><strong data-bn="জীবনের গতি নয়।" data-en="Not your life.">জীবনের গতি নয়।</strong></h1><p class="bsh-hero-sub" data-bn="একটি সন্দেহজনক কল, বার্তা, ছবি বা লিংক? ভয় পাওয়ার আগে বুঝুন। বাংলাশিল্ডের Guardian পাশে আছে—প্রমাণ দেখাতে, ঝুঁকি বোঝাতে, সঠিক সিদ্ধান্ত নিতে।" data-en="A suspicious call, message, image or link? Understand it before fear takes over. Guardian helps you see the evidence, understand the risk and choose your next step.">একটি সন্দেহজনক কল, বার্তা, ছবি বা লিংক? ভয় পাওয়ার আগে বুঝুন। বাংলাশিল্ডের Guardian পাশে আছে—প্রমাণ দেখাতে, ঝুঁকি বোঝাতে, সঠিক সিদ্ধান্ত নিতে।</p><div class="bsh-actions"><a class="bsh-btn bsh-btn-primary" href="https://bangla-shield-ai.vercel.app/#/check"><span data-bn="এখনই যাচাই করুন" data-en="Check something now">এখনই যাচাই করুন</span><span class="bsh-btn-arrow" aria-hidden="true">↗</span></a><a class="bsh-btn bsh-btn-outline" href="https://bangla-shield-ai.vercel.app/#/guardian"><span data-bn="Guardian-এর সাথে কথা বলুন" data-en="Talk to Guardian">Guardian-এর সাথে কথা বলুন</span> <svg width="16" height="16"><use href="#ic-arrow"/></svg></a></div><p class="bsh-note" data-bn="সহজ বাংলা · ব্যবহারকারীর নিয়ন্ত্রণে · এআই ভুল করতে পারে" data-en="Plain language · You stay in control · AI can be wrong">সহজ বাংলা · ব্যবহারকারীর নিয়ন্ত্রণে · এআই ভুল করতে পারে</p></div>
+<div class="bsh-demo-tabs" role="tablist" aria-label="Fictional scam examples"><button class="bsh-demo-tab" data-example="0" role="tab" aria-selected="true">ভুয়া ভয়েস কল</button><button class="bsh-demo-tab" data-example="1" role="tab" aria-selected="false">সন্দেহজনক বার্তা</button><button class="bsh-demo-tab" data-example="2" role="tab" aria-selected="false">ভুয়া লিংক</button></div><p class="bsh-demo-label">ইন্টারঅ্যাকটিভ উদাহরণ · বাস্তব এআই বিশ্লেষণ নয়</p>
+<div class="bsh-hero-scene"><div class="bsh-scene-card"><div class="bsh-card-top"><span class="circle"><svg width="14" height="14"><use href="#ic-phone"/></svg></span><span id="sampleInputTitle">সন্দেহজনক কলে</span></div><div class="bsh-demo-sample"><p id="sampleInputText">“মা, খুব বিপদে আছি। এখনই ৫০,০০০ টাকা পাঠাও। কাউকে বোলো না।”</p><span class="bsh-card-foot"><span aria-hidden="true">●</span><span id="sampleInputFlag">তাড়াহুড়া ও গোপনীয়তার চাপ</span></span></div></div><div class="bsh-hero-center"><div class="bsh-halo" aria-hidden="true"><svg viewBox="0 0 320 265"><circle cx="160" cy="132" r="102" stroke="#8ac5a0" stroke-width=".8" stroke-dasharray="3 7" fill="none"/><circle cx="160" cy="132" r="78" stroke="#a6d9b5" stroke-width="1.3" fill="none"/><circle cx="160" cy="132" r="55" stroke="#c4e6ce" stroke-width="20" fill="none" opacity=".40"/><path d="M18 136H64 M256 136h46" stroke="#9dccac" stroke-width="2" stroke-dasharray="4 7"/><circle cx="48" cy="136" r="4" fill="#399a65"/><circle cx="273" cy="136" r="4" fill="#399a65"/></svg></div><div class="bsh-shield"><svg width="55" height="55" viewBox="0 0 32 32" style="color:#1a6847"><use href="#ic-shield"/></svg></div><div class="bsh-shield-label">Guardian</div></div><div class="bsh-scene-card bsh-advice"><div class="bsh-card-top"><span class="circle"><svg width="14" height="14"><use href="#ic-shield"/></svg></span><span id="sampleOutputTitle">Guardian-এর পরামর্শ</span></div><div class="bsh-demo-sample"><p id="sampleOutputText">টাকা পাঠাবেন না। আগে ছেলের পরিচিত নম্বরে নিজে ফোন করে যাচাই করুন।</p><span class="bsh-card-foot"><span aria-hidden="true">✓</span><span id="sampleOutputFlag">আগে যাচাই, তারপর সিদ্ধান্ত</span></span></div></div></div><p class="bsh-scene-caption">আপনার সিদ্ধান্ত আপনারই। Guardian শুধু ঝুঁকি ও নিরাপদ পথ বুঝতে সাহায্য করে।</p>
+</div></section>
+<section class="bsh-section" aria-labelledby="tools-title"><div class="bsh-wrap"><div class="bsh-intro"><div><span class="bsh-label">THE FIRST STEP</span><h2 id="tools-title">কোন বিষয়টি নিয়ে<br>দুশ্চিন্তায় আছেন?</h2><p>যা পেয়েছেন, সেটাই দিন। কঠিন প্রযুক্তি জানার দরকার নেই।</p></div><p>বাংলাশিল্ডের যাচাই টুল সরাসরি খুলুন। কোনো নতুন অ্যাকাউন্ট ছাড়াও শুরু করা যায়।</p></div><div class="bsh-check-grid"><a class="bsh-feature-card" href="https://bangla-shield-ai.vercel.app/#/check/voice"><span class="bsh-card-arrow">↗</span><span class="bsh-feature-icon"><svg width="23" height="23"><use href="#ic-mic"/></svg></span><h3>ভয়েস কল</h3><p>অচেনা কণ্ঠ, জরুরি টাকার দাবি বা পরিচয় নিয়ে সন্দেহ।</p></a><a class="bsh-feature-card" href="https://bangla-shield-ai.vercel.app/#/check/message"><span class="bsh-card-arrow">↗</span><span class="bsh-feature-icon"><svg width="23" height="23"><use href="#ic-message"/></svg></span><h3>বার্তা</h3><p>বিকাশ, এসএমএস, WhatsApp বা অনলাইনে আসা মেসেজ।</p></a><a class="bsh-feature-card" href="https://bangla-shield-ai.vercel.app/#/check/image"><span class="bsh-card-arrow">↗</span><span class="bsh-feature-icon"><svg width="23" height="23"><use href="#ic-image"/></svg></span><h3>ছবি ও স্ক্রিনশট</h3><p>অফার, নোটিশ বা সন্দেহজনক স্ক্রিনশট বুঝুন।</p></a><a class="bsh-feature-card" href="https://bangla-shield-ai.vercel.app/#/check/link"><span class="bsh-card-arrow">↗</span><span class="bsh-feature-icon"><svg width="23" height="23"><use href="#ic-link"/></svg></span><h3>লিংক ও QR</h3><p>ক্লিক করার আগে লিংকের সম্ভাব্য ঝুঁকি দেখুন।</p></a></div></div></section>
+<section class="bsh-guardian" aria-labelledby="guardian-title"><div class="bsh-wrap"><div class="bsh-guardian-grid"><div class="bsh-guardian-copy"><span class="bsh-label">MEET YOUR GUARDIAN</span><h2 id="guardian-title">শুধু উত্তর নয়।<br>পাশে থাকার মতো সাহায্য।</h2><p class="bsh-quote">কিছু বুঝতে পারছেন না? Guardian-কে নিজের ভাষায় বলুন। এটি প্রশ্ন বুঝে, সন্দেহের কারণ ব্যাখ্যা করে, পরের নিরাপদ পদক্ষেপ সাজিয়ে দেয়।</p><div class="bsh-guardian-bullets"><div class="bsh-guardian-bullet"><span class="bsh-tick">✓</span><span>আপনার ভাষায় কথা বলে—সহজ বাংলা অথবা ইংরেজিতে।</span></div><div class="bsh-guardian-bullet"><span class="bsh-tick">✓</span><span>কী জানা গেছে আর কী জানা যায়নি, আলাদা করে দেখায়।</span></div><div class="bsh-guardian-bullet"><span class="bsh-tick">✓</span><span>অনুমতি ছাড়া আপনার ফোন নিয়ন্ত্রণের দাবি করে না।</span></div></div><a class="bsh-btn bsh-btn-primary" href="https://bangla-shield-ai.vercel.app/#/guardian">Guardian খুলুন <span aria-hidden="true">↗</span></a></div><div class="bsh-chat"><div class="bsh-chat-head"><span class="bsh-chat-avatar"><svg width="21" height="21"><use href="#ic-shield"/></svg></span><div><strong>Guardian</strong><span>আপনার ডিজিটাল নিরাপত্তা সহায়ক</span></div><span style="margin-left:auto;background:#e4f1e5;color:#22764f;border-radius:20px;font-size:9px;font-weight:800;padding:4px 9px">সংলাপের উদাহরণ</span></div><div class="bsh-chat-message user">আমাকে একজন ফোন করে বলল, সে আমার ছেলের বন্ধু। জরুরিভাবে টাকা চাচ্ছে। কী করব?</div><div class="bsh-chat-message agent">প্রথমে টাকা পাঠাবেন না। আপনার ছেলেকে তার পরিচিত নম্বরে যোগাযোগ করুন। অপরিচিত নম্বরের দাবিকে যাচাই ছাড়া বিশ্বাস করবেন না।</div><div class="bsh-chat-evidence">কেন সতর্কতা? <strong>জরুরি টাকা + তৃতীয় ব্যক্তির পরিচয় দাবি</strong> — এগুলো প্রতারণার সম্ভাব্য কৌশল।</div><div class="bsh-chat-foot"><span>শিক্ষামূলক উদাহরণ · লাইভ চ্যাট নয়</span><span>↗ Guardian-এ যান</span></div></div></div></div></section>
+<section class="bsh-story" aria-labelledby="story-title"><div class="bsh-wrap"><div class="bsh-story-grid"><div><span class="bsh-label">THE REASON WE EXIST</span><h2 id="story-title">একটি ভুল সিদ্ধান্তের মূল্য<br>পুরো পরিবারের জীবন।</h2><p>রাহেলার ছেলে বিদেশে কাজ করে। এক রাতে ছেলের মতো কণ্ঠে ফোন এলো—“মা, এখনই টাকা পাঠাও।” গল্পটি কাল্পনিক, কিন্তু ভয় আর চাপের অনুভূতিটা বাস্তব। আমরা চাই, প্রতিটি রাহেলা যেন সিদ্ধান্তের আগে একবার থেমে যাচাই করতে পারেন।</p><a class="bsh-story-link" href="https://bangla-shield-ai.vercel.app/#/check/voice?demo=rahela-voice">রাহেলার উদাহরণটি দেখুন ↗</a></div><div class="bsh-story-art"><div class="bsh-message-bubble"><small>অচেনা নম্বর • কাল্পনিক কল</small><p>“মা, আমি বিপদে আছি।<br>এখনই টাকা পাঠাও।”</p><b>Guardian পরামর্শ: আগে নিজের পরিচিত নম্বরে যোগাযোগ করুন।</b></div><div class="bsh-story-wave" aria-hidden="true"><i style="height:10px"></i><i style="height:17px"></i><i style="height:26px"></i><i style="height:38px"></i><i style="height:20px"></i><i style="height:47px"></i><i style="height:30px"></i><i style="height:21px"></i><i style="height:35px"></i><i style="height:16px"></i><i style="height:27px"></i><i style="height:12px"></i></div></div></div></div></section>
+<section class="bsh-more" aria-labelledby="more-title"><div class="bsh-wrap"><div class="bsh-intro"><div><span class="bsh-label">BEYOND CHECKING</span><h2 id="more-title">যাচাইয়ের পরেও আমরা আছি।</h2></div><p>ঝুঁকি বোঝা প্রথম ধাপ। সঠিক সিদ্ধান্ত নেওয়া, শেখা এবং বিপদে সহায়তা পাওয়াও সমান জরুরি।</p></div><div class="bsh-more-grid"><a href="https://bangla-shield-ai.vercel.app/#/learn" class="bsh-more-card"><span class="bsh-cap">01 / শেখা</span><h3>ScamAcademy ↗</h3><p>বাস্তবসম্মত কাল্পনিক পরিস্থিতিতে ভুল ও সঠিক সিদ্ধান্তের পার্থক্য শিখুন।</p></a><a href="https://bangla-shield-ai.vercel.app/#/community" class="bsh-more-card"><span class="bsh-cap">02 / কমিউনিটি</span><h3>সবার সতর্কতা ↗</h3><p>পর্যালোচিত প্রতারণার ধরন সম্পর্কে জানুন। নিজের অভিজ্ঞতাও জানাতে পারেন।</p></a><a href="https://bangla-shield-ai.vercel.app/#/help" class="bsh-more-card"><span class="bsh-cap">03 / সহায়তা</span><h3>বিপদে কী করবেন? ↗</h3><p>টাকা বা তথ্য দিয়ে ফেললে কীভাবে দ্রুত নিরাপদ পদক্ষেপ নেবেন, জানুন।</p></a></div></div></section>
+<section class="bsh-end"><div class="bsh-wrap"><span style="display:block;font-size:10px;letter-spacing:.17em;color:#a9d6ba;font-weight:800;margin-bottom:14px">BANGLASHIELD AI</span><h2>সন্দেহ হলে, একা নন।</h2><p>একটি প্রশ্ন, একটি যাচাই—হতে পারে পরিবারের জন্য সবচেয়ে জরুরি সিদ্ধান্ত।</p><a class="bsh-btn" href="https://bangla-shield-ai.vercel.app/#/guardian">Guardian-এর সাথে কথা বলুন <span aria-hidden="true">↗</span></a></div></section>
+<footer class="bsh-standalone-footer">BanglaShield AI • Design exploration for Bangladesh • Frontend concept only</footer>
+</div>
+<script>
+const EXAMPLES=[{a:'সন্দেহজনক কলে',b:'“মা, খুব বিপদে আছি। এখনই ৫০,০০০ টাকা পাঠাও। কাউকে বোলো না।”',c:'তাড়াহুড়া ও গোপনীয়তার চাপ',d:'Guardian-এর পরামর্শ',e:'টাকা পাঠাবেন না। আগে ছেলের পরিচিত নম্বরে নিজে ফোন করে যাচাই করুন।',f:'আগে যাচাই, তারপর সিদ্ধান্ত'}, {a:'সন্দেহজনক বার্তা',b:'“আপনার উপবৃত্তির টাকা আটকে গেছে। এখনই OTP দিয়ে নিশ্চিত করুন।”',c:'ব্যক্তিগত কোড চাওয়া হয়েছে',d:'Guardian-এর পরামর্শ',e:'OTP কাউকে দেবেন না। সংশ্লিষ্ট প্রতিষ্ঠানের সরকারি চ্যানেলে খোঁজ নিন।',f:'কোড গোপন রাখুন'}, {a:'ভুয়া লিংক',b:'“আজই আবেদন করুন: scholarship-verify.example”',c:'অচেনা ডোমেইন ও জরুরি চাপ',d:'Guardian-এর পরামর্শ',e:'লিংকটি খোলার আগে প্রতিষ্ঠানের নিজস্ব ওয়েবসাইট থেকে ঠিকানা যাচাই করুন।',f:'স্বাধীনভাবে সূত্র মিলিয়ে দেখুন'}];
+document.querySelectorAll('.bsh-demo-tab').forEach(btn=>btn.addEventListener('click',()=>{const x=EXAMPLES[Number(btn.dataset.example)];document.querySelectorAll('.bsh-demo-tab').forEach(b=>b.setAttribute('aria-selected',String(b===btn)));['sampleInputTitle','sampleInputText','sampleInputFlag','sampleOutputTitle','sampleOutputText','sampleOutputFlag'].forEach((id,i)=>document.getElementById(id).textContent=[x.a,x.b,x.c,x.d,x.e,x.f][i]);}));
+const EXAMPLES_EN=[
+{a:'Suspicious call',b:'“Mom, I’m in trouble. Send 50,000 taka now. Don’t tell anyone.”',c:'Urgency and secrecy pressure',d:'Guardian’s guidance',e:'Don’t send money. Call your son using his known number first.',f:'Verify first, decide second'},
+{a:'Suspicious message',b:'“Your stipend is on hold. Confirm immediately using your OTP.”',c:'Sensitive code requested',d:'Guardian’s guidance',e:'Never share your OTP. Contact the institution through its official channel.',f:'Keep your code private'},
+{a:'Suspicious link',b:'“Apply today: scholarship-verify.example”',c:'Unknown domain and urgency',d:'Guardian’s guidance',e:'Before opening, verify the address through the institution’s actual website.',f:'Verify sources independently'}];
+const TRANSLATIONS={
+'যাচাই করুন':'Verify','শিখুন':'Learn','সহায়তা':'Help','Guardian খুলুন':'Open Guardian',
+'ভুয়া ভয়েস কল':'Suspicious call','সন্দেহজনক বার্তা':'Suspicious message','ভুয়া লিংক':'Suspicious link',
+'ইন্টারঅ্যাকটিভ উদাহরণ · বাস্তব এআই বিশ্লেষণ নয়':'Interactive example · not a live AI analysis',
+'আপনার সিদ্ধান্ত আপনারই। Guardian শুধু ঝুঁকি ও নিরাপদ পথ বুঝতে সাহায্য করে।':'Your decision stays yours. Guardian helps you understand safer options.',
+'কোন বিষয়টি নিয়ে':'What are you','দুশ্চিন্তায় আছেন?':'worried about?',
+'যা পেয়েছেন, সেটাই দিন। কঠিন প্রযুক্তি জানার দরকার নেই।':'Submit what you received. You don’t need technical knowledge.',
+'বাংলাশিল্ডের যাচাই টুল সরাসরি খুলুন। কোনো নতুন অ্যাকাউন্ট ছাড়াও শুরু করা যায়।':'Open the existing verification tools without an account.',
+'ভয়েস কল':'Voice calls','অচেনা কণ্ঠ, জরুরি টাকার দাবি বা পরিচয় নিয়ে সন্দেহ।':'Unknown voices, urgent demands or impersonation concerns.',
+'বার্তা':'Messages','বিকাশ, এসএমএস, WhatsApp বা অনলাইনে আসা মেসেজ।':'Suspicious SMS, mobile-banking and chat messages.',
+'ছবি ও স্ক্রিনশট':'Images & screenshots','অফার, নোটিশ বা সন্দেহজনক স্ক্রিনশট বুঝুন।':'Understand suspicious screenshots, offers and notices.',
+'লিংক ও QR':'Links & QR','ক্লিক করার আগে লিংকের সম্ভাব্য ঝুঁকি দেখুন।':'Check the potential risk before opening a link.',
+'শুধু উত্তর নয়।':'Not just answers.','পাশে থাকার মতো সাহায্য।':'Guidance that stays with you.',
+'কিছু বুঝতে পারছেন না? Guardian-কে নিজের ভাষায় বলুন। এটি প্রশ্ন বুঝে, সন্দেহের কারণ ব্যাখ্যা করে, পরের নিরাপদ পদক্ষেপ সাজিয়ে দেয়।':'Unsure what is happening? Talk to Guardian in your own words. It helps explain the concern and suggests safer next steps.',
+'আপনার ভাষায় কথা বলে—সহজ বাংলা অথবা ইংরেজিতে।':'Speak in plain Bangla or English.',
+'কী জানা গেছে আর কী জানা যায়নি, আলাদা করে দেখায়।':'See what is known and what remains uncertain.',
+'অনুমতি ছাড়া আপনার ফোন নিয়ন্ত্রণের দাবি করে না।':'No claim of controlling your phone without permission.',
+'আপনার ডিজিটাল নিরাপত্তা সহায়ক':'Your personal safety companion',
+'সংলাপের উদাহরণ':'Example chat',
+'আমাকে একজন ফোন করে বলল, সে আমার ছেলের বন্ধু। জরুরিভাবে টাকা চাচ্ছে। কী করব?':'Someone claiming to be my son’s friend called and urgently requested money. What should I do?',
+'প্রথমে টাকা পাঠাবেন না। আপনার ছেলেকে তার পরিচিত নম্বরে যোগাযোগ করুন। অপরিচিত নম্বরের দাবিকে যাচাই ছাড়া বিশ্বাস করবেন না।':'First, don’t send money. Call your son at his known number. Verify claims from unknown callers independently.',
+'জরুরি টাকা + তৃতীয় ব্যক্তির পরিচয় দাবি':'Urgent money + unverified identity',
+'শিক্ষামূলক উদাহরণ · লাইভ চ্যাট নয়':'Illustration · not a live chat',
+'একটি ভুল সিদ্ধান্তের মূল্য':'One wrong decision can','পুরো পরিবারের জীবন।':'change a family’s life.',
+'রাহেলার ছেলে বিদেশে কাজ করে। এক রাতে ছেলের মতো কণ্ঠে ফোন এলো—“মা, এখনই টাকা পাঠাও।” গল্পটি কাল্পনিক, কিন্তু ভয় আর চাপের অনুভূতিটা বাস্তব। আমরা চাই, প্রতিটি রাহেলা যেন সিদ্ধান্তের আগে একবার থেমে যাচাই করতে পারেন।':'Rahela’s son works abroad. One night, someone sounds like him and asks for money. This story is fictional, but the pressure is familiar. We want every Rahela to pause and verify first.',
+'রাহেলার উদাহরণটি দেখুন ↗':'Explore Rahela’s example ↗',
+'অচেনা নম্বর • কাল্পনিক কল':'Unknown number · fictional call',
+'“মা, আমি বিপদে আছি।':'“Mom, I’m in trouble.','এখনই টাকা পাঠাও।”':'Send money now.”',
+'Guardian পরামর্শ: আগে নিজের পরিচিত নম্বরে যোগাযোগ করুন।':'Guardian tip: independently contact a known number.',
+'যাচাইয়ের পরেও আমরা আছি।':'We are here after the check, too.',
+'ঝুঁকি বোঝা প্রথম ধাপ। সঠিক সিদ্ধান্ত নেওয়া, শেখা এবং বিপদে সহায়তা পাওয়াও সমান জরুরি।':'Understanding risk is only the start. Learning and recovery matter too.',
+'ScamAcademy ↗':'ScamAcademy ↗','বাস্তবসম্মত কাল্পনিক পরিস্থিতিতে ভুল ও সঠিক সিদ্ধান্তের পার্থক্য শিখুন।':'Practice safer decisions in fictional real-world situations.',
+'সবার সতর্কতা ↗':'Community warnings ↗','পর্যালোচিত প্রতারণার ধরন সম্পর্কে জানুন। নিজের অভিজ্ঞতাও জানাতে পারেন।':'Learn from reviewed scam patterns and community warnings.',
+'বিপদে কী করবেন? ↗':'Need help? ↗','টাকা বা তথ্য দিয়ে ফেললে কীভাবে দ্রুত নিরাপদ পদক্ষেপ নেবেন, জানুন।':'Learn what to do after sharing money or personal information.',
+'সন্দেহ হলে, একা নন।':'If you’re unsure, you’re not alone.',
+'একটি প্রশ্ন, একটি যাচাই—হতে পারে পরিবারের জন্য সবচেয়ে জরুরি সিদ্ধান্ত।':'One question and one check can make an important difference.',
+'Guardian-এর সাথে কথা বলুন':'Talk to Guardian',
+'কেন সতর্কতা?':'Why caution?','— এগুলো প্রতারণার সম্ভাব্য কৌশল।':'— these can be scam tactics.'
+};
+const translatedNodes=[];
+const walker=document.createTreeWalker(document.querySelector('.bsh-home'),NodeFilter.SHOW_TEXT);
+while(walker.nextNode()){
+  const n=walker.currentNode;
+  if(n.parentElement?.closest('[data-bn],.bsh-demo-tab,.bsh-demo-sample,.bsh-card-top'))continue;
+  const orig=n.nodeValue,trimmed=orig.trim(),translated=TRANSLATIONS[trimmed];
+  if(translated)translatedNodes.push([n,orig,translated]);
+}
+let en=false;
+function updateExample(){const i=Number(document.querySelector('.bsh-demo-tab[aria-selected="true"]')?.dataset.example??0),x=(en?EXAMPLES_EN:EXAMPLES)[i];['sampleInputTitle','sampleInputText','sampleInputFlag','sampleOutputTitle','sampleOutputText','sampleOutputFlag'].forEach((id,j)=>document.getElementById(id).textContent=[x.a,x.b,x.c,x.d,x.e,x.f][j]);}
+document.querySelectorAll('.bsh-demo-tab').forEach(btn=>btn.addEventListener('click',()=>updateExample()));
+document.getElementById('langSwitch').addEventListener('click',()=>{
+  en=!en;document.documentElement.lang=en?'en':'bn';document.getElementById('langSwitch').textContent=en?'বাংলা':'EN';
+  document.querySelectorAll('[data-bn][data-en]').forEach(el=>el.textContent=el.dataset[en?'en':'bn']);
+  translatedNodes.forEach(([node,original,translated])=>node.nodeValue=en?original.replace(original.trim(),translated):original);
+  document.querySelectorAll('.bsh-demo-tab').forEach((btn,i)=>btn.textContent=(en?['Suspicious call','Suspicious message','Suspicious link']:['ভুয়া ভয়েস কল','সন্দেহজনক বার্তা','ভুয়া লিংক'])[i]);
+  updateExample();
+});
+</script></body></html>

@@ -1,0 +1,317 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Identity & access
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String        @id @default(uuid())
+  email        String?       @unique // analysts log in with email
+  username     String?       @unique // community members log in with username
+  publicId     String?       @unique // human-readable member id, e.g. BSA-7F3K9Q
+  name         String?
+  role         String        @default("analyst") // citizen | analyst | admin
+  passwordHash String
+  active       Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reviews      HumanReview[]
+  posts        CommunityPost[]
+  comments     Comment[]
+  marks        HelpfulMark[]
+  reports      Report[]      // optional private link for "My reports" tracking
+}
+
+// ---------------------------------------------------------------------------
+// Citizen analysis sessions (scam verification)
+// ---------------------------------------------------------------------------
+
+model AnalysisSession {
+  id            String          @id // public case id, e.g. BS-7K2M9Q
+  visitorId     String? // guest identity from the signed server-issued cookie (never a personal identifier)
+  modality      String // voice | message | image | link
+  status        String // awaiting_input | awaiting_review | processing | completed | failed | canceled | expired
+  stage         String? // current pipeline stage while processing
+  language      String          @default("bn")
+  extractedText String? // redacted transcript / OCR text (sanitized evidence only)
+  engine        String? // ai_assisted | rule_based
+  riskCategory  String? // high | uncertain | none
+  scamCategory  String?
+  result        Json? // fully validated AnalysisResult contract
+  error         String?
+  retentionDays Int             @default(7)
+  // Durable job execution: a surviving in-process promise is an optimization,
+  // not the source of truth. Claims make execution resumable/recoverable and
+  // guard terminal-state races (canceled/deleted can never become completed).
+  jobClaimToken String? // holder of the current pipeline run (uuid per attempt)
+  jobClaimedAt  DateTime?
+  jobAttempts   Int             @default(0) // bounded re-dispatch count (max 2)
+  pendingInput  Json? // redacted pipeline args while a run is in flight — enables durable recovery; cleared at terminal states
+  expiresAt     DateTime? // createdAt + retentionDays — enforced by the expiry sweep
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  completedAt   DateTime?
+  deletedAt     DateTime?
+  evidence      EvidenceItem[]
+  feedback      Feedback[]
+  consents      ConsentRecord[]
+  report        Report?
+}
+
+model EvidenceItem {
+  id            String          @id @default(uuid())
+  sessionId     String
+  session       AnalysisSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  key           String // stable key, e.g. E1, E2 (referenced by replay stages)
+  kind          String // quoted_text | heuristic | visual | url_property | context
+  quote         String? // redacted excerpt from the submitted content
+  interpretation Json? // { bn, en }
+  tactic        String? // urgency | impersonation | otp_request | ...
+  source        String // producing module, e.g. heuristic:otp-request
+  weight        String // strong | moderate | weak
+}
+
+model ConsentRecord {
+  id        String           @id @default(uuid())
+  sessionId String
+  session   AnalysisSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  purpose   String // analysis | retention | reporting
+  granted   Boolean
+  createdAt DateTime         @default(now())
+}
+
+model Feedback {
+  id        String          @id @default(uuid())
+  sessionId String
+  session   AnalysisSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  helpful   Boolean
+  followed  Boolean?
+  outcome   String?
+  comment   String?
+  createdAt DateTime        @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Community reporting & fraud intelligence
+// ---------------------------------------------------------------------------
+
+model Report {
+  id              String        @id // public reference, e.g. RPT-9XK3QA
+  sessionId       String?       @unique
+  session         AnalysisSession? @relation(fields: [sessionId], references: [id])
+  authorId        String? // optional private link to a member account (never public)
+  author          User?         @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  category        String
+  riskCategory    String?
+  contentRedacted String
+  indicators      Json? // { phone?, domain?, phrases[] }
+  status          String        @default("pending") // pending | under_review | approved | published | rejected | withdrawn
+  synthetic       Boolean       @default(false) // clearly-labeled demonstration seed data
+  title           String? // moderator-approved alert headline
+  alertBody       String? // moderator-approved public alert body (bn)
+  // F-03 fix (V8): sha256 of the one-time withdrawal receipt token shown to
+  // the submitter. Withdrawal requires this token (or member authorship) —
+  // the public reference id alone can never withdraw a report.
+  withdrawTokenHash String?
+  submittedAt     DateTime      @default(now())
+  reviewedAt      DateTime?
+  publishedAt     DateTime?
+  updatedAt       DateTime      @updatedAt
+  reviews         HumanReview[]
+}
+
+model FraudPattern {
+  id          String        @id @default(uuid())
+  code        String        @unique // e.g. FP-2025-001
+  name        Json // { bn, en }
+  description Json // { bn, en }
+  category    String
+  status      String        @default("candidate") // candidate | under_review | approved | rejected | withdrawn
+  synthetic   Boolean       @default(false)
+  confidence  String // low | moderate | high (qualitative, human-assessed)
+  reportIds   Json // list of Report ids supporting the pattern
+  indicators  Json // shared indicators: phone fragments, domains, phrases
+  firstSeen   DateTime
+  lastSeen    DateTime
+  reviewedAt  DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  reviews     HumanReview[]
+  edges       PatternEdge[]
+}
+
+model PatternEdge {
+  id         String       @id @default(uuid())
+  patternId  String
+  pattern    FraudPattern @relation(fields: [patternId], references: [id], onDelete: Cascade)
+  sourceKey  String // e.g. report:RPT-XXXX | indicator:phone:****4521 | domain:verify-bkash.xyz
+  targetKey  String
+  relation   String // shares_phone | shares_domain | shares_phrase | uses_tactic | part_of
+  explanation Json? // { bn, en }
+  weight     String // strong | moderate | weak
+}
+
+model HumanReview {
+  id         String        @id @default(uuid())
+  patternId  String?
+  pattern    FraudPattern? @relation(fields: [patternId], references: [id], onDelete: Cascade)
+  reportId   String?
+  report     Report?       @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reviewerId String
+  reviewer   User          @relation(fields: [reviewerId], references: [id])
+  action     String // approve | reject | split | withdraw | escalate
+  reason     String
+  expiresAt  DateTime?
+  createdAt  DateTime      @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Verified resources, audit, education
+// ---------------------------------------------------------------------------
+
+model VerifiedResource {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  name        Json // { bn, en }
+  category    String // mfs | bank | police | regulator | cert | helpline
+  description Json // { bn, en }
+  guidance    Json // { bn, en } what to do when contacting them
+  url         String
+  phone       String?
+  sourceUrl   String // where the contact was verified from
+  verifiedAt  DateTime
+  active      Boolean  @default(true)
+  sort        Int      @default(0)
+}
+
+model AuditEvent {
+  id         String   @id @default(uuid())
+  actorType  String // analyst | system | citizen
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String?
+  detail     Json?
+  createdAt  DateTime @default(now())
+}
+
+model LearningProgress {
+  id          String   @id @default(uuid())
+  learnerToken String
+  lessonId    String
+  score       Int
+  total       Int
+  completedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([learnerToken, lessonId])
+}
+
+// ---------------------------------------------------------------------------
+// Community feed (member posts, comments, helpful marks)
+// ---------------------------------------------------------------------------
+
+model CommunityPost {
+  id           String   @id @default(uuid())
+  ref          String   @unique // public tracking code, e.g. CPT-4K2M9Q
+  authorId     String
+  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  kind         String // alert | help | experience
+  body         String // max 2000 chars, stored as submitted (redacted client-side review is NOT applied here)
+  imageData    String? // base64 data URL, EXIF-stripped + resized client-side, <= ~1.2 MB
+  aiRisk       String   @default("pending") // pending | none | caution | high (risk TO READERS of this post)
+  aiSignals    Json? // [{ id, label: {bn, en} }] evidence-grounded indicators
+  aiSummary    Json? // { bn, en } one-line AI safety notice (labeled, unverified)
+  aiEngine     String? // rules | rules+ai
+  status       String   @default("active") // active | under_review | hidden
+  synthetic    Boolean  @default(false) // clearly-labeled demonstration seed data
+  helpfulCount Int      @default(0)
+  commentCount Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  comments     Comment[]
+  marks        HelpfulMark[]
+}
+
+model Comment {
+  id         String        @id @default(uuid())
+  postId     String
+  post       CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId   String
+  author     User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  isAgent    Boolean       @default(false) // ShieldAgent auto-generated first response
+  body       String // max 1000 chars
+  createdAt  DateTime      @default(now())
+}
+
+model HelpfulMark {
+  id        String        @id @default(uuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+
+  @@unique([postId, userId])
+}
+
+// ---------------------------------------------------------------------------
+// Trust & Evaluation — versioned, measured model/policy benchmark records.
+// No metric is ever displayed without a backing EvaluationRun row; absent
+// data renders as "Not evaluated yet" in the UI.
+// ---------------------------------------------------------------------------
+
+model EvaluationRun {
+  id              String   @id @default(uuid())
+  runId           String   @unique // public reference, e.g. EVAL-7K2M9Q
+  kind            String // rules-baseline | model-primary | model-fallback
+  subject         String // "rules:v7" | exact model id (e.g. openrouter/anthropic/claude-sonnet-4.5)
+  servingProvider String? // actual serving provider when reported
+  datasetVersion  String // semantic version of the frozen dataset
+  datasetHash     String // sha256 of the dataset file content
+  sampleCount     Int
+  decided         Int             @default(0) // cases the subject returned a decision for
+  abstained       Int             @default(0)
+  tp              Int             @default(0)
+  fp              Int             @default(0)
+  fn              Int             @default(0)
+  tn              Int             @default(0)
+  ambiguousHeld   Int             @default(0) // ambiguous-label cases excluded from binary scoring
+  schemaFailures  Int             @default(0)
+  requestFailures Int             @default(0)
+  p50LatencyMs    Int             @default(0)
+  p95LatencyMs    Int             @default(0)
+  costUsd         Float? // actual or estimated; null = unknown
+  costBasis       String          @default("none") // actual | estimated | none
+  limitations     Json? // [{ bn, en }]
+  startedAt       DateTime
+  completedAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  items           EvaluationItem[]
+}
+
+model EvaluationItem {
+  id         String   @id @default(uuid())
+  runId      String
+  run        EvaluationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  sampleId   String
+  language   String // bn | banglish | en
+  label      String // scam | benign | ambiguous
+  subtype    String
+  predicted  String? // riskCategory returned (null = failure/abstain)
+  correct    Boolean? // null = abstained/failed/ambiguous-held
+  latencyMs  Int
+  failure    String? // timeout | schema | request | none
+  createdAt  DateTime @default(now())
+
+  @@index([runId, language])
+}

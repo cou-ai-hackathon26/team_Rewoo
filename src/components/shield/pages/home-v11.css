@@ -1,0 +1,729 @@
+/* BanglaShield V11 — "Human First" homepage design language.
+   Ported 1:1 from the approved standalone exploration (upload/index.html).
+   Every selector is scoped under .bsh-home — no global styles are touched.
+   The global Header / Footer / MobileTabBar render outside this component
+   and keep their own styling, exactly as before. */
+
+.bsh-home {
+  --paper: #f7faf5;
+  --white: #ffffff;
+  --mint: #eaf6ee;
+  --mint2: #d4ebdc;
+  --ink: #15352a;
+  --forest: #165c42;
+  --leaf: #238258;
+  --sage: #708a79;
+  --muted: #5f786b;
+  --line: #d7e5da;
+  --warn: #a95a47;
+  --gold: #e9c68a;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-hind), var(--font-dm-sans), "Noto Sans Bengali", "Lohit Bengali", Arial, sans-serif;
+  line-height: 1.65;
+  overflow: hidden;
+}
+.bsh-home *,
+.bsh-home *:before,
+.bsh-home *:after {
+  box-sizing: border-box;
+}
+.bsh-home a {
+  color: inherit;
+  text-decoration: none;
+}
+.bsh-home button {
+  font: inherit;
+  cursor: pointer;
+}
+.bsh-home button:focus-visible,
+.bsh-home a:focus-visible {
+  outline: 3px solid #a9772a;
+  outline-offset: 3px;
+}
+.bsh-home h1,
+.bsh-home h2,
+.bsh-home h3,
+.bsh-home p {
+  margin: 0;
+}
+.bsh-home .bsh-wrap {
+  max-width: 1192px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+.bsh-home .bsh-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--forest);
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+.bsh-home .bsh-label:before {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--forest);
+}
+
+/* --- Hero --- */
+.bsh-home .bsh-hero {
+  position: relative;
+  padding: 65px 0 60px;
+  background: radial-gradient(ellipse 58% 55% at 50% 63%, #d4efe0 0%, #eff8f2 62%, #f2f9f4 100%);
+  isolation: isolate;
+}
+.bsh-home .bsh-hero:before {
+  content: "";
+  position: absolute;
+  inset: 15px 0 0;
+  background-image: radial-gradient(#a7d7b7 0.65px, transparent 0.65px);
+  background-size: 32px 32px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 40%, transparent 100%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.bsh-home .bsh-hero-copy {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 950px;
+  margin: 0 auto;
+}
+.bsh-home .bsh-overline {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #bde0c9;
+  color: #396852;
+  background: rgba(255, 255, 255, 0.77);
+  border-radius: 99px;
+  padding: 7px 14px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.bsh-home .bsh-overline .bsh-live-dot {
+  height: 7px;
+  width: 7px;
+  border-radius: 100%;
+  background: #259263;
+  box-shadow: 0 0 0 4px #25926320;
+}
+.bsh-home .bsh-hero h1 {
+  font-size: clamp(39px, 4.8vw, 66px);
+  line-height: 1.25;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  margin: 23px auto 17px;
+  color: #153a2d;
+}
+.bsh-home .bsh-hero h1 strong {
+  font-weight: 700;
+  color: #1e8957;
+}
+.bsh-home .bsh-hero-sub {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #4c6b5c;
+  max-width: 620px;
+  margin: 0 auto;
+}
+.bsh-home .bsh-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+.bsh-home .bsh-btn {
+  min-height: 47px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 99px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.2;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.bsh-home .bsh-btn:hover {
+  transform: translateY(-2px);
+}
+.bsh-home .bsh-btn-primary {
+  background: #143c2c;
+  color: white !important;
+  box-shadow: 0 9px 20px #214d3625;
+}
+.bsh-home .bsh-btn-primary:hover {
+  background: #266949;
+  box-shadow: 0 13px 30px #214d3639;
+}
+.bsh-home .bsh-btn-outline {
+  border: 1px solid #b8d5c1;
+  background: #ffffffbb;
+  color: #17432e !important;
+}
+.bsh-home .bsh-btn-outline:hover {
+  background: #fff;
+}
+.bsh-home .bsh-btn-arrow {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: #e0f1e5;
+  display: grid;
+  place-items: center;
+  color: #13583e;
+  font-size: 16px;
+}
+.bsh-home .bsh-note {
+  font-size: 10.5px;
+  color: #618270;
+  margin-top: 16px;
+}
+.bsh-home .bsh-aura {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  width: 340px;
+  height: 410px;
+  opacity: 0.56;
+  filter: blur(0.25px);
+}
+.bsh-home .bsh-aura-left {
+  left: -150px;
+  top: 65px;
+  transform: rotate(-14deg);
+}
+.bsh-home .bsh-aura-right {
+  right: -155px;
+  top: 35px;
+  transform: scaleX(-1) rotate(-8deg);
+}
+/* --- Sections --- */
+.bsh-home .bsh-section {
+  padding: 85px 0;
+}
+.bsh-home .bsh-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: end;
+  margin-bottom: 32px;
+}
+.bsh-home .bsh-section h2 {
+  font-size: clamp(28px, 3.3vw, 41px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.36;
+  margin: 11px 0 14px;
+}
+.bsh-home .bsh-intro p {
+  color: var(--muted);
+  font-size: 13px;
+  max-width: 440px;
+  line-height: 1.9;
+}
+.bsh-home .bsh-check-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.bsh-home .bsh-feature-card {
+  display: block;
+  background: #fff;
+  border: 1px solid #e3ebe3;
+  border-radius: 19px;
+  min-height: 194px;
+  padding: 25px 21px 21px;
+  position: relative;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+.bsh-home .bsh-feature-card:hover {
+  transform: translateY(-5px);
+  border-color: #8cbf9d;
+  box-shadow: 0 16px 37px #174f3920;
+}
+.bsh-home .bsh-feature-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #1f7952;
+  background: #e8f5ea;
+  margin-bottom: 19px;
+}
+.bsh-home .bsh-feature-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.bsh-home .bsh-feature-card p {
+  font-size: 11px;
+  color: #637f6d;
+  line-height: 1.8;
+}
+.bsh-home .bsh-feature-card .bsh-card-arrow {
+  position: absolute;
+  right: 21px;
+  top: 25px;
+  color: #7eab8c;
+  font-size: 17px;
+}
+
+/* --- Guardian story --- */
+.bsh-home .bsh-guardian {
+  padding: 64px 0;
+  background: #ecf5ec;
+}
+.bsh-home .bsh-guardian-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 65px;
+}
+/* The V11 reference leaves this headline at the browser-default size/weight
+   (the standalone ships no explicit rule). Tailwind's preflight resets
+   headings, so we re-declare that computed style explicitly. */
+.bsh-home .bsh-guardian h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1.65;
+}
+.bsh-home .bsh-guardian-copy .bsh-quote {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #416552;
+  max-width: 420px;
+  margin-top: 17px;
+}
+.bsh-home .bsh-guardian-bullets {
+  margin: 26px 0;
+  display: grid;
+  gap: 13px;
+}
+.bsh-home .bsh-guardian-bullet {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: #365646;
+  font-weight: 600;
+}
+.bsh-home .bsh-guardian-bullet .bsh-tick {
+  border-radius: 50%;
+  height: 19px;
+  width: 19px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #378f60;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.bsh-home .bsh-chat {
+  border: 1px solid #dce7dc;
+  background: #fdfefc;
+  box-shadow: 0 30px 65px #124f3215;
+  border-radius: 24px;
+  padding: 20px 22px 15px;
+  max-width: 470px;
+  margin-left: auto;
+}
+.bsh-home .bsh-chat-head {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eef2ec;
+}
+.bsh-home .bsh-chat-avatar {
+  height: 37px;
+  width: 37px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #184a35;
+  color: white;
+}
+.bsh-home .bsh-chat-head strong {
+  display: block;
+  font-size: 13px;
+}
+.bsh-home .bsh-chat-head span {
+  display: block;
+  font-size: 10px;
+  color: #7c9484;
+}
+.bsh-home .bsh-chat-message {
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 19px;
+  border-radius: 15px;
+  padding: 14px 17px;
+  max-width: 85%;
+}
+.bsh-home .bsh-chat-message.user {
+  background: #eff6ee;
+  color: #365647;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.bsh-home .bsh-chat-message.agent {
+  background: #edf4ec;
+  color: #214932;
+  border-bottom-left-radius: 4px;
+}
+.bsh-home .bsh-chat-evidence {
+  margin-top: 16px;
+  border-left: 3px solid #b0d8bc;
+  padding: 5px 11px;
+  font-size: 11px;
+  color: #436351;
+  line-height: 1.6;
+}
+.bsh-home .bsh-chat-foot {
+  padding-top: 14px;
+  margin-top: 12px;
+  border-top: 1px solid #eef2ec;
+  color: #72907c;
+  font-size: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.bsh-home .bsh-chat-foot a:hover {
+  color: #2b8558;
+}
+
+/* --- Rahela scenario --- */
+.bsh-home .bsh-story {
+  padding: 85px 0;
+}
+.bsh-home .bsh-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 42px;
+  align-items: center;
+  background: #f3efe5;
+  border-radius: 26px;
+  padding: 45px 58px;
+}
+.bsh-home .bsh-story h2 {
+  margin-top: 12px;
+  font-size: 36px;
+  line-height: 1.45;
+  font-weight: 700;
+}
+.bsh-home .bsh-story p {
+  font-size: 13px;
+  color: #6c6e5d;
+  line-height: 2;
+  max-width: 470px;
+}
+.bsh-home .bsh-story-art {
+  min-height: 280px;
+  border-radius: 22px;
+  background: radial-gradient(circle at 40% 20%, #d5ddc3, #dfe7d7 65%, #c7d9c9);
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+}
+.bsh-home .bsh-story-art:before {
+  content: "";
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  border: 1px solid #abcab5;
+  border-radius: 50%;
+  right: -90px;
+  top: -110px;
+  box-shadow:
+    0 0 0 40px #c5d9c844,
+    0 0 0 81px #c1d5c744;
+}
+.bsh-home .bsh-story-wave {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  opacity: 0.45;
+}
+.bsh-home .bsh-story-wave i {
+  width: 3px;
+  background: #33674f;
+  border-radius: 9px;
+}
+.bsh-home .bsh-message-bubble {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  background: #fffefa;
+  padding: 22px;
+  border-radius: 19px 19px 19px 5px;
+  box-shadow: 0 14px 40px #536a4a30;
+  transform: rotate(-3deg);
+}
+.bsh-home .bsh-message-bubble small {
+  font-size: 10px;
+  color: #8c9b86;
+}
+.bsh-home .bsh-message-bubble p {
+  color: #3d4f41;
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 9px;
+  line-height: 1.65;
+}
+.bsh-home .bsh-message-bubble b {
+  display: block;
+  font-size: 10px;
+  color: #b05f4d;
+  margin-top: 9px;
+}
+.bsh-home .bsh-story .bsh-story-link {
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a7550;
+  margin-top: 18px;
+  border-bottom: 1px solid #1a755066;
+  padding-bottom: 4px;
+}
+.bsh-home .bsh-story .bsh-story-link:hover {
+  color: #14563c;
+}
+
+/* --- Beyond checking --- */
+.bsh-home .bsh-more {
+  padding: 42px 0 90px;
+}
+.bsh-home .bsh-more-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.bsh-home .bsh-more-card {
+  display: block;
+  padding: 23px 25px;
+  border: 1px solid #dbe9dd;
+  border-radius: 18px;
+  background: #fff;
+  min-height: 155px;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+.bsh-home .bsh-more-card:hover {
+  transform: translateY(-5px);
+  border-color: #8cbf9d;
+  box-shadow: 0 16px 37px #174f3920;
+}
+.bsh-home .bsh-more-card .bsh-cap {
+  font-size: 10px;
+  color: #79917f;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.bsh-home .bsh-more-card h3 {
+  font-size: 17px;
+  margin: 9px 0 7px;
+  font-weight: 700;
+}
+.bsh-home .bsh-more-card p {
+  font-size: 11px;
+  color: #6d8072;
+  line-height: 1.85;
+}
+
+/* --- Final CTA --- */
+.bsh-home .bsh-end {
+  background: #163d2e;
+  padding: 60px 0 65px;
+  color: #fff;
+  text-align: center;
+}
+.bsh-home .bsh-end h2 {
+  font-size: 34px;
+  line-height: 1.4;
+  margin-bottom: 13px;
+  font-weight: 700;
+}
+.bsh-home .bsh-end p {
+  color: #bad3be;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 26px;
+}
+.bsh-home .bsh-end .bsh-btn {
+  background: #daf1dc;
+  color: #184331 !important;
+}
+.bsh-home .bsh-end .bsh-btn:hover {
+  background: #c7e8cc;
+}
+
+/* App-level "reduce motion" setting (Settings page) — complements the
+   OS-level prefers-reduced-motion query below. Purely decorative motion. */
+.bsh-home.bsh-still *,
+.bsh-home.bsh-still *:before,
+.bsh-home.bsh-still *:after {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (max-width: 1000px) {
+  .bsh-home .bsh-guardian-grid {
+    gap: 25px;
+  }
+  .bsh-home .bsh-check-grid {
+    gap: 10px;
+  }
+  .bsh-home .bsh-feature-card {
+    padding: 20px 15px;
+  }
+}
+@media (max-width: 720px) {
+  .bsh-home .bsh-wrap {
+    padding: 0 20px;
+  }
+  .bsh-home .bsh-hero {
+    padding: 53px 0 48px;
+  }
+  .bsh-home .bsh-overline {
+    font-size: 9px;
+  }
+  .bsh-home .bsh-hero h1 {
+    font-size: 37px;
+    margin-top: 21px;
+  }
+  .bsh-home .bsh-hero-sub {
+    font-size: 12.5px;
+  }
+  .bsh-home .bsh-btn {
+    font-size: 11px;
+    min-height: 43px;
+    padding: 10px 16px;
+  }
+  .bsh-home .bsh-aura {
+    width: 160px;
+    height: 300px;
+    opacity: 0.35;
+  }
+  .bsh-home .bsh-aura-left {
+    left: -95px;
+  }
+  .bsh-home .bsh-aura-right {
+    right: -95px;
+  }
+  .bsh-home .bsh-section {
+    padding: 62px 0;
+  }
+  .bsh-home .bsh-intro {
+    display: block;
+    margin-bottom: 22px;
+  }
+  .bsh-home .bsh-section h2 {
+    font-size: 27px;
+  }
+  .bsh-home .bsh-intro p {
+    font-size: 12px;
+  }
+  .bsh-home .bsh-check-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 11px;
+  }
+  .bsh-home .bsh-feature-card {
+    min-height: 170px;
+    padding: 18px 14px;
+  }
+  .bsh-home .bsh-feature-card h3 {
+    font-size: 15px;
+  }
+  .bsh-home .bsh-feature-card p {
+    font-size: 10px;
+  }
+  .bsh-home .bsh-feature-icon {
+    width: 37px;
+    height: 37px;
+    margin-bottom: 14px;
+  }
+  .bsh-home .bsh-guardian {
+    padding: 62px 0;
+  }
+  .bsh-home .bsh-guardian-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .bsh-home .bsh-chat {
+    max-width: none;
+    margin: 0;
+  }
+  .bsh-home .bsh-story {
+    padding: 62px 0;
+  }
+  .bsh-home .bsh-story-grid {
+    grid-template-columns: 1fr;
+    gap: 27px;
+    padding: 29px 24px;
+  }
+  .bsh-home .bsh-story h2 {
+    font-size: 27px;
+  }
+  .bsh-home .bsh-story-art {
+    min-height: 225px;
+  }
+  .bsh-home .bsh-more {
+    padding: 10px 0 65px;
+  }
+  .bsh-home .bsh-more-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .bsh-home .bsh-more-card {
+    min-height: 110px;
+  }
+  .bsh-home .bsh-end {
+    padding: 55px 0;
+  }
+  .bsh-home .bsh-end h2 {
+    font-size: 27px;
+  }
+  .bsh-home .bsh-actions {
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bsh-home *,
+  .bsh-home *:before,
+  .bsh-home *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
